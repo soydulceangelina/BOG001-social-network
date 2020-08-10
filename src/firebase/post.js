@@ -17,6 +17,7 @@ export const saveEvent = (hour, date, sport, place, description) => {
     lugar: place,
     descripcion: description,
     fechaPublicacion: timeStamp,
+    commentList: [],
   }).then((respuesta) => {
     console.log(respuesta);
     window.location.href = '#/timeline';

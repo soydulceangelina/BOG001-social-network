@@ -36,8 +36,8 @@ const comment = (event, refresh) => {
     e.preventDefault();
     createComment();
     commentForm.classList.toggle('hide');
-    refresh();
     commentInput.innerHTML = '';
+    refresh();
   });
 
   return commentForm;
