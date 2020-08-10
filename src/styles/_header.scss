@@ -24,6 +24,9 @@
         font-size: 20px;
     }
 
+    .header__menu__item:hover {
+        color: $primary_color;
+    }
     .list {
         height: 50px;
         background-color: $white_color;

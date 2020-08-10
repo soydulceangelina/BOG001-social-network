@@ -151,6 +151,7 @@ h3{
 
 .like {
   color: $secondary_color;
+  transition: all .2s ease;
 }
 
 @media (min-width: $media-tablet) {
