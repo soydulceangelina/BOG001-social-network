@@ -1,4 +1,4 @@
-const error404 = () => {
+const initTimeline = () => {
   const view = `
     <section class="error404">
       <div class="error404-img">
@@ -14,11 +14,11 @@ const error404 = () => {
         <img src="../assets/soccer.png" alt="">
       </div>
       </section>
-    <h1 class="error404-title">Opss! Error 404</h1>
+    <h1 class="error404-title">Agrega tu primer evento</h1>
     `;
   const container = document.createElement('div');
   container.innerHTML = view;
   return container;
 };
 
-export default error404;
+export default initTimeline;

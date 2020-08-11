@@ -2,13 +2,13 @@ import { editEvent } from '../firebase/post';
 
 const comment = (event, refresh) => {
   const view = `
-  <h3 class="">Comentar a ${event.nombre}</h3>
-  <textarea class="input__comment" maxlength="100" id="comment" cols="35" rows="3" required></textarea>
-    <div>
-    <button class="comment--btn" type="submit">Comentar</button>
-    <button id="notComment" class="comment--btn" type="button">Cancelar</button>
+    <h3 class="">Comentar a ${event.nombre}</h3>
+    <textarea class="input__comment" maxlength="100" id="comment" cols="35" rows="3" required></textarea>
+    <div class="commentBtn__container">
+      <button class="comment--btn" type="submit">Comentar</button>
+      <button id="notComment" class="comment--btn" type="button">Cancelar</button>
     </div>
-    `;
+  `;
   const commentForm = document.createElement('form');
   commentForm.setAttribute('class', 'eventOptions');
   commentForm.innerHTML = view;

@@ -7,6 +7,8 @@ const footerTemplate = () => {
     </div>
   </footer>
   `;
-  return view;
+  const container = document.createElement('div');
+  container.innerHTML = view;
+  return container;
 };
 export default footerTemplate;

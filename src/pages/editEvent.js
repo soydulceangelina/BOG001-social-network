@@ -6,7 +6,7 @@ const editEventComponent = async (eventId) => {
   const doc = await getEvent(eventId);
   const event = doc.data();
   const view = `
-  <a href="#/timeline"><span class="flaticon-remove postIcon"></span></a>
+  <a href="#/timeline" title="Descartar los cambios"><span class="flaticon-remove postIcon"></span></a>
     <h1 class="login__title container__form--title">Edita tu evento</h1>
     <form class="event_form form" id="event-form">
       <div class="form-group">

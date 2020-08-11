@@ -42,6 +42,10 @@ $media-desktop: 1600px;
 	outline: none;
 }
 
+.display--hide {
+  display: none;
+}
+
 @mixin input {
   color: $gray_color;
   font-size: 1em;

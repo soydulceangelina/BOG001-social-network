@@ -2,14 +2,7 @@ import swal from 'sweetalert';
 import comment from '../utils/comment';
 import printComment from '../utils/printComment';
 import { deletePost, editEvent } from '../firebase/post';
-
-const sportIcons = {
-  Futbol: '../assets/balon.png',
-  Baloncesto: '../assets/001-basketball.png',
-  Senderismo: '../assets/trekking.png',
-  Béisbol: '../assets/002-baseball.png',
-  Ciclismo: '../assets/bycicle.png',
-};
+import { sportIcons } from '../utils/imagesDefault';
 
 const getSportIcon = (sport) => {
   const icon = sportIcons[sport];
@@ -52,7 +45,12 @@ const eventComponent = (event) => {
         <div class="event__interaction--position">
           <span class="flaticon-menu icons__timeline">
           </span>
-          <ul class="eventOptions">
+          <ul class="eventOptions" id="eventFriend">
+            <li>
+              <button class="eventOptions__btn">Reportar</button>
+            </li>
+          </ul>
+          <ul class="eventOptions" id="myEvent">
             <li>
               <button class="eventOptions__btn edit">Editar Evento</button>
             </li>
@@ -62,7 +60,7 @@ const eventComponent = (event) => {
           </ul>
         </div>
       </div>
-      <div class="comment__container">
+      <div class="comment__container display--hide">
       </div>
     </div>
   `;
@@ -86,8 +84,20 @@ const eventComponent = (event) => {
     eventContainer.querySelector('.interaction__text').innerHTML = `${likes.length} Asistiré`;
   });
   // Mostrar u ocultar el menu
-  eventContainer.querySelector('.flaticon-menu').addEventListener('click', () => {
-    eventContainer.querySelector('ul').classList.toggle('hide');
+  const eventOptionMenu = eventContainer.querySelector('.flaticon-menu');
+
+  document.addEventListener('click', (e) => {
+    if (eventOptionMenu.querySelector('#myEvent').style.bottom === '-25vh' && e.target !== eventOptionMenu.querySelector('#myEvent')) {
+      eventOptionMenu.querySelector('#myEvent').classList.toggle('hide');
+    }
+  });
+  // Cambiar opciones del evento de acuerdo al usuario
+  eventOptionMenu.addEventListener('click', () => {
+    if (userID === event.id) {
+      eventContainer.querySelector('#myEvent').classList.toggle('hide');
+    } else {
+      eventContainer.querySelector('#eventFriend').classList.toggle('hide');
+    }
   });
 
   // mostrar u ocultar los comentarios
@@ -95,21 +105,18 @@ const eventComponent = (event) => {
     const commentsContainer = eventContainer.querySelector('.comment__container');
     const refreshComment = () => {
       commentsContainer.innerHTML = '';
+      eventContainer.querySelector('.commentQuantity').innerHTML = `${event.commentList.length} comentarios`;
       commentsContainer.insertAdjacentElement('beforeend', printComment(event));
     };
+    refreshComment();
     eventContainer.querySelector('.form__comment').insertAdjacentElement('beforeend', comment(event, refreshComment));
-    commentsContainer.innerHTML = '';
-    commentsContainer.insertAdjacentElement('beforeend', printComment(event));
     eventContainer.querySelector('form').classList.toggle('hide');
+    commentsContainer.classList.toggle('display--hide');
   });
 
   // editar evento
-  eventContainer.querySelector('.edit').addEventListener('click', async () => {
-    if (userID === event.id) {
-      window.location.href = `#/editEvent?eventId=${event.eventId}`;
-    } else {
-      console.log('No puedes editar este evento');
-    }
+  eventContainer.querySelector('.edit').addEventListener('click', () => {
+    window.location.href = `#/editEvent?eventId=${event.eventId}`;
   });
 
   // funcion eliminar evento
@@ -130,8 +137,6 @@ const eventComponent = (event) => {
           eventContainer.innerHTML = '';
         }
       });
-    } else {
-      swal('No puedes eliminar este evento');
     }
   });
 
@@ -139,62 +144,3 @@ const eventComponent = (event) => {
 };
 
 export default eventComponent;
-/*
-import { saveEvent } from '../firebase/post';
-
-const event = () => {
-  const view = `
-  <section class = "event">
-  <a href="#/timeline"><span class="flaticon-remove postIcon"></span></a>
-    <h1 class="login__title container__form--title">Crea tu evento</h1>
-    <form class="event_form form" id="event-form" action = "" method = "">
-      <div class="">
-        <label for = "fname" class="">Fecha</label>
-        <input class="event__input"  type="date" id="fecha" name="Fecha" required autocomplete="off" >
-      </div>
-      <div class="">
-        <label for = "Hora" class="">Hora</label>
-        <input class="event__input" type="time" id="hora" name ="hora" required autocomplete = "off" >
-      </div>
-      <div>
-        <label class="" for = "fname">Deporte</label>
-        <select class="event__input" type="text" id="deporte" name="Deporte" required autocomplete="off" >
-          <option class="" value="Futbol">Fútbol</option>
-          <option class="" value="Baloncesto">Baloncesto</option>
-          <option class="" value="Senderismo">Senderismo</option>
-          <option class="" value="Béisbol">Béisbol</option>
-          <option class="" value="Ciclismo">Ciclismo</option>
-        </select>
-      </div>
-      <div class="">
-        <textarea name="place" id="place" cols="35" rows="3" maxlength="80" placeholder="Lugar, maximo 80 caracteres" required></textarea>
-      </div>
-      <div class="">
-        <textarea name="description" id="description" cols="35" rows="8" maxlength="150" placeholder="Descripcion maximo 150 caracteres" required></textarea>
-      </div>
-      <div class="">
-        <button type="submit" class="button" id = "publicar">Publicar</button>
-      </div>
-    </form>
-  </section>
-  `;
-  const container = document.createElement('div');
-  container.innerHTML = view;
-  const eventForm = container.querySelector('#event-form');
-
-  const createEvent = () => {
-    const hour = document.getElementById('hora').value;
-    const date = document.getElementById('fecha').value;
-    const sport = document.getElementById('deporte').value;
-    const place = document.getElementById('place').value;
-    const description = document.getElementById('description').value;
-
-    saveEvent(hour, date, sport, place, description);
-  };
-
-  eventForm.addEventListener('submit', (e) => { e.preventDefault(); createEvent(); });
-  return container;
-};
-
-export default event;
-*/

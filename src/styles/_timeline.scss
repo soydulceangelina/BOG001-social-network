@@ -94,16 +94,21 @@ h3{
   color: $primary_color;
 }
 
+.commentBtn__container {
+  @extend .horizontalCentering;
+}
+
 .comment--btn{
   background-color: $secondary_color;
   border: none;
   outline: none;
   border-radius: 50px;
-  padding: 10px;
+  padding: 10px 20px;
   color: $white_color;
   font-weight: bold;
   margin: 0 20px;
   cursor: pointer;
+  width: 100%;
 }
 
 .eventOptions{
