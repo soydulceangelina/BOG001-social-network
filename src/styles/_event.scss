@@ -8,11 +8,13 @@
 }
 .event_form{
   @extend .horizontalCentering;
+  input,select {
+    height: 2.6em;
+  }
   input, select, textarea {
     border-radius: 0.5em;
     font-family: $font-family;
     background-color: $white_color;
-    height: 2.6em;
     width: 20em;
     padding: 0.5em;
     margin-bottom: 2em;
